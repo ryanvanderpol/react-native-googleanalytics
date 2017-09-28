@@ -1,0 +1,32 @@
+{
+  "name": "react-native-googleanalytics",
+  "version": "1.0.0",
+  "description": "Google Analytics integration for use with React Native apps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanvanderpol/react-native-googleanalytics.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "google",
+    "analytics"
+  ],
+  "author": "Ryan Vanderpol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryanvanderpol/react-native-googleanalytics/issues"
+  },
+  "homepage": "https://github.com/ryanvanderpol/react-native-googleanalytics#readme",
+  "dependencies": {
+    "react-native-device-info": "^0.11.0"
+  },
+  "devDependencies": {
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.48.4"
+  }
+}
