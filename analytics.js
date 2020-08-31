@@ -13,13 +13,12 @@ export default class Analytics {
     ready = false
     queue = []
     customDimensions = []
+    userAgent = ''
+    clientId = null
 
     constructor(propertyId, additionalParameters = {}, options = defaultOptions){
         this.propertyId = propertyId;
         this.options = options;
-        this.clientId = DeviceInfo.getUniqueID();
-        this.options = options;
-        this.userAgent = DeviceInfo.getUserAgent();
 
         this.parameters = {
             an: packageDotJson.name,
@@ -28,14 +27,24 @@ export default class Analytics {
             sr: `${width}x${height}`,
             ...additionalParameters
         };
-
-        if(this.options.debug){
-            console.log(`[react-native-googleanalytics] UserAgent=${this.userAgent}`);
-            console.log(`[react-native-googleanalytics] Additional parameters=`, this.parameters);
-        }
-
-        this.ready = true;
     }
+
+    setup = () => new Promise((resolve, reject), async () => {
+        try {
+            this.clientId = DeviceInfo.getUniqueID();
+            this.userAgent = await DeviceInfo.getUserAgent();
+
+            if(this.options.debug){
+                console.log(`[react-native-googleanalytics] UserAgent=${this.userAgent}`);
+                console.log(`[react-native-googleanalytics] Additional parameters=`, this.parameters);
+            }
+
+            this.ready = true;
+            resolve();
+        } catch (error) {
+            reject(error);
+        }
+    })
 
     hit(hit){
         this.queue.push(hit);
