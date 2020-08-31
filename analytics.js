@@ -1,7 +1,7 @@
-import { Platform, Dimensions } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { Dimensions } from 'react-native';
+import { getUniqueId, getUserAgent } from 'react-native-device-info';
 
-import { ScreenHit, PageHit, Event, Serializable } from './hits';
+import { Serializable } from './hits';
 
 const packageDotJson = require('../../package.json');
 
@@ -13,28 +13,40 @@ export default class Analytics {
     ready = false
     queue = []
     customDimensions = []
+    userAgent = ''
+    clientId = null
 
     constructor(propertyId, additionalParameters = {}, options = defaultOptions){
         this.propertyId = propertyId;
         this.options = options;
-        this.clientId = DeviceInfo.getUniqueID();
-        this.options = options;
-        this.userAgent = DeviceInfo.getUserAgent();
 
-        this.parameters = { 
-            an: packageDotJson.name, 
-            aid: packageDotJson.name, 
+        this.parameters = {
+            an: packageDotJson.name,
+            aid: packageDotJson.name,
             av: packageDotJson.version,
             sr: `${width}x${height}`,
             ...additionalParameters
         };
 
-        if(this.options.debug){
-            console.log(`[react-native-googleanalytics] UserAgent=${this.userAgent}`);
-            console.log(`[react-native-googleanalytics] Additional parameters=`, this.parameters);
-        }
+        this.setup();
+    }
 
-        this.ready = true;
+    setup = async () => {
+        try {
+            this.clientId = getUniqueId();
+            this.userAgent = await getUserAgent();
+
+            if(this.options.debug){
+                console.log(`[react-native-googleanalytics] UserAgent=${this.userAgent}`);
+                console.log(`[react-native-googleanalytics] Additional parameters=`, this.parameters);
+            }
+        } catch (error) {
+            if(this.options.debug){
+                console.log(error);
+            }
+        } finally {
+            this.ready = true;
+        }
     }
 
     hit(hit){
