@@ -28,7 +28,7 @@ export default class Analytics {
             ...additionalParameters
         };
 
-        this.setup()
+        this.setup();
     }
 
     setup = async () => {
