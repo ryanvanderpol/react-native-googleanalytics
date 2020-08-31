@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { getUniqueId, getUserAgent } from 'react-native-device-info';
 
 import { Serializable } from './hits';
 
@@ -33,8 +33,8 @@ export default class Analytics {
 
     setup = async () => {
         try {
-            this.clientId = DeviceInfo.getUniqueID();
-            this.userAgent = await DeviceInfo.getUserAgent();
+            this.clientId = getUniqueID();
+            this.userAgent = await getUserAgent();
 
             if(this.options.debug){
                 console.log(`[react-native-googleanalytics] UserAgent=${this.userAgent}`);
