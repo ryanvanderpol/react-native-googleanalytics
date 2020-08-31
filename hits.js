@@ -29,7 +29,7 @@ export class Serializable {
 }
 
 class Hit extends Serializable {
-    
+
     sent = false
 
     constructor(props){

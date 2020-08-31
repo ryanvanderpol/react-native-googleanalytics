@@ -1,7 +1,7 @@
-import { Platform, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
-import { ScreenHit, PageHit, Event, Serializable } from './hits';
+import { Serializable } from './hits';
 
 const packageDotJson = require('../../package.json');
 
@@ -21,9 +21,9 @@ export default class Analytics {
         this.options = options;
         this.userAgent = DeviceInfo.getUserAgent();
 
-        this.parameters = { 
-            an: packageDotJson.name, 
-            aid: packageDotJson.name, 
+        this.parameters = {
+            an: packageDotJson.name,
+            aid: packageDotJson.name,
             av: packageDotJson.version,
             sr: `${width}x${height}`,
             ...additionalParameters
