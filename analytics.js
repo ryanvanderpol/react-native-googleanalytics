@@ -33,7 +33,7 @@ export default class Analytics {
 
     setup = async () => {
         try {
-            this.clientId = getUniqueID();
+            this.clientId = getUniqueId();
             this.userAgent = await getUserAgent();
 
             if(this.options.debug){
