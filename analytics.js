@@ -27,9 +27,11 @@ export default class Analytics {
             sr: `${width}x${height}`,
             ...additionalParameters
         };
+
+        this.setup()
     }
 
-    setup = () => new Promise((resolve, reject), async () => {
+    setup = async () => {
         try {
             this.clientId = DeviceInfo.getUniqueID();
             this.userAgent = await DeviceInfo.getUserAgent();
@@ -38,13 +40,14 @@ export default class Analytics {
                 console.log(`[react-native-googleanalytics] UserAgent=${this.userAgent}`);
                 console.log(`[react-native-googleanalytics] Additional parameters=`, this.parameters);
             }
-
-            this.ready = true;
-            resolve();
         } catch (error) {
-            reject(error);
+            if(this.options.debug){
+                console.log(error);
+            }
+        } finally {
+            this.ready = true;
         }
-    })
+    }
 
     hit(hit){
         this.queue.push(hit);
